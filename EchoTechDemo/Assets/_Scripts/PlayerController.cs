@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayer;
     public bool grounded;
     public bool canMove = true;
+    public bool rewind = false;
+    public RewindHandler rewindEvent;
 
     private void Update()
     {
@@ -25,6 +27,9 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Rewind"))
         {
+            rewind = true;
+            rewindEvent.run = false;
+            rewindEvent.timerRef = rewindEvent.frameRate;
             rigidBody.gravityScale = 0;
             rigidBody.velocity = Vector2.zero;
             canMove = false;
@@ -32,8 +37,30 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonUp("Rewind"))
         {
-            rigidBody.gravityScale = 1;
-            canMove = true;
+            StopRewind();
+        }
+
+        if (rewind)
+        {
+            if (rewindEvent.timerRef == rewindEvent.frameRate)
+            {
+                if (rewindEvent.rewindablePoints.Count > 0)
+                {
+                    transform.position = rewindEvent.rewindablePoints[rewindEvent.rewindablePoints.Count - 1].position;
+                    rewindEvent.rewindablePoints.RemoveAt(rewindEvent.rewindablePoints.Count - 1);
+                }
+                else if (rewindEvent.rewindablePoints.Count == 0)
+                {
+                    StopRewind();
+                }
+            }
+
+            rewindEvent.timerRef -= Time.deltaTime;
+
+            if (rewindEvent.timerRef <= 0)
+            {
+                rewindEvent.timerRef = rewindEvent.frameRate;
+            }
         }
     }
 
@@ -43,6 +70,14 @@ public class PlayerController : MonoBehaviour
         {
             Move();
         }
+    }
+
+    private void StopRewind()
+    {
+        rewind = false;
+        rewindEvent.run = true;
+        rigidBody.gravityScale = 1;
+        canMove = true;
     }
 
     private bool IsGrounded()

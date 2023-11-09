@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 253492552}
   - component: {fileID: 253492551}
   - component: {fileID: 253492555}
+  - component: {fileID: 253492556}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -270,6 +271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
+  jumpForce: 12
   direction: 0
   rigidBody: {fileID: 253492551}
   boxCollider: {fileID: 253492552}
@@ -277,6 +279,26 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   grounded: 0
+  canMove: 1
+  rewind: 0
+  rewindEvent: {fileID: 253492556}
+--- !u!114 &253492556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253492548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d55b7ab91bc0b344ca90cd74b25e628d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rewindablePoints: []
+  run: 1
+  maxSize: 120
+  frameRate: 120
+  timerRef: 0
 --- !u!1 &518084099
 GameObject:
   m_ObjectHideFlags: 0
