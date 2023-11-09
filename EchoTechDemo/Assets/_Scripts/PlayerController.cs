@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public int speed = 6;
     public int jumpForce = 12;
-    public int direction = 0;
+    public float direction = 0;
     public Rigidbody2D rigidBody;
     public BoxCollider2D boxCollider;
     public LayerMask groundLayer;
@@ -16,34 +16,21 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         grounded = IsGrounded();
-        
-        
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            direction = 1;
-        }
-        else if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            direction = -1;
-        }
-        else
-        {
-            direction = 0;
-        }
+        direction = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetKeyDown(KeyCode.Space) && grounded)
+        if (Input.GetButtonDown("Jump") && grounded)
         {
             if (canMove) Jump();
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetButtonDown("Rewind"))
         {
             rigidBody.gravityScale = 0;
             rigidBody.velocity = Vector2.zero;
             canMove = false;
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftShift))
+        if (Input.GetButtonUp("Rewind"))
         {
             rigidBody.gravityScale = 1;
             canMove = true;
