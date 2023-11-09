@@ -135,8 +135,6 @@ GameObject:
   - component: {fileID: 253492553}
   - component: {fileID: 253492552}
   - component: {fileID: 253492551}
-  - component: {fileID: 253492550}
-  - component: {fileID: 253492549}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -144,34 +142,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &253492549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 253492548}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9645b6f47a606449856eba30b0302bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &253492550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 253492548}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a2f2ffe2713eeb47b69f1644cbf16b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _input: {fileID: 11400000, guid: b0d451efd612f7f43ad93f7eb1d31167, type: 2}
-  _maxSpeed: 4
-  _maxAcceleration: 35
-  _maxAirAcceleration: 20
 --- !u!50 &253492551
 Rigidbody2D:
   serializedVersion: 4
@@ -380,7 +350,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 518084099}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 24ca38011748e7f4c9c5539a6ad4b15d, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
