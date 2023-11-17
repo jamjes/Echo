@@ -4,97 +4,110 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public int speed = 6;
-    public int jumpForce = 12;
-    public float direction = 0;
-    public Rigidbody2D rigidBody;
-    public BoxCollider2D boxCollider;
-    public LayerMask groundLayer;
-    public bool grounded;
-    public bool canMove = true;
-    public bool rewind = false;
-    public RewindHandler rewindEvent;
+    [SerializeField] private int _speed = 6;
+    [SerializeField] private int _jumpForce = 12;
+    [SerializeField] private LayerMask _groundLayer;
+
+    public float Direction {private set; get;}
+    public bool Grounded { private set; get; }
+
+    private Rigidbody2D _rigidBody;
+    private BoxCollider2D _boxCollider;
+    private RewindHandler _rewindHandler;
+
+    private bool _canMove = true;
+    private bool _isRewinding = false;
+
+    private void OnEnable()
+    {
+        RewindController.OnEnterRewind += StopMovement;
+        RewindController.OnExitRewind += StartMovement;
+    }
+
+    private void OnDisable()
+    {
+        RewindController.OnEnterRewind -= StopMovement;
+        RewindController.OnExitRewind -= StartMovement;
+    }
+
+
+    private void Start()
+    {
+        _rigidBody = GetComponent<Rigidbody2D>();
+        _boxCollider = GetComponent<BoxCollider2D>();
+        _rewindHandler = GetComponent<RewindHandler>();
+    }
 
     private void Update()
     {
-        grounded = IsGrounded();
-        direction = Input.GetAxisRaw("Horizontal");
+        Grounded = IsGrounded();
+        Direction = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetButtonDown("Jump") && grounded)
+        if (Input.GetButtonDown("Jump") && Grounded)
         {
-            if (canMove) Jump();
+            if (_canMove) Jump();
         }
+    }
 
-        if (Input.GetButtonDown("Rewind"))
-        {
-            rewind = true;
-            rewindEvent.run = false;
-            rewindEvent.timerRef = rewindEvent.frameRate;
-            rigidBody.gravityScale = 0;
-            rigidBody.velocity = Vector2.zero;
-            canMove = false;
-        }
+    private void StopMovement()
+    {
+        _isRewinding = true;
+        _rewindHandler.StopRecording();
+        _rigidBody.gravityScale = 0;
+        _rigidBody.velocity = Vector2.zero;
+        _canMove = false;
+    }
 
-        if (Input.GetButtonUp("Rewind"))
-        {
-            StopRewind();
-        }
-
-        if (rewind)
-        {
-            if (rewindEvent.timerRef == rewindEvent.frameRate)
-            {
-                if (rewindEvent.rewindablePoints.Count > 0)
-                {
-                    transform.position = rewindEvent.rewindablePoints[rewindEvent.rewindablePoints.Count - 1].position;
-                    rewindEvent.rewindablePoints.RemoveAt(rewindEvent.rewindablePoints.Count - 1);
-                }
-                else if (rewindEvent.rewindablePoints.Count == 0)
-                {
-                    StopRewind();
-                }
-            }
-
-            rewindEvent.timerRef -= Time.deltaTime;
-
-            if (rewindEvent.timerRef <= 0)
-            {
-                rewindEvent.timerRef = rewindEvent.frameRate;
-            }
-        }
+    private void StartMovement()
+    {
+        _isRewinding = false;
+        _rewindHandler.StartRecording();
+        _rigidBody.gravityScale = 1;
+        _canMove = true;
     }
 
     private void FixedUpdate()
     {
-        if (canMove)
+        if (_canMove)
         {
             Move();
         }
     }
 
-    private void StopRewind()
-    {
-        rewind = false;
-        rewindEvent.run = true;
-        rigidBody.gravityScale = 1;
-        canMove = true;
-    }
-
     private bool IsGrounded()
     {
-        RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0f, Vector2.down, .3f, groundLayer);
-
+        RaycastHit2D hit = Physics2D.BoxCast(_boxCollider.bounds.center, _boxCollider.bounds.size, 0f, Vector2.down, .3f, _groundLayer);
         return hit.collider != null;
     }
 
     private void Move()
     {
-        rigidBody.velocity = new Vector2(speed * direction, rigidBody.velocity.y);
+        _rigidBody.velocity = new Vector2(_speed * Direction, _rigidBody.velocity.y);
     }
 
     private void Jump()
     {
-        rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
+        _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _jumpForce);
+    }
+
+    public void SetCanMove(bool value)
+    {
+        _canMove = value;
+    }
+
+    public void SetIsRewinding(bool value)
+    {
+        _canMove = value;
+    }
+
+    public bool GetCanMove()
+    {
+        return _canMove;
+    }
+
+    public bool GetIsRewinding()
+    {
+        return _isRewinding;
     }
 
 }
