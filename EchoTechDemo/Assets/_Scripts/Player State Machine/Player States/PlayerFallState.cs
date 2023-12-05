@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerIdleState : PlayerState
+public class PlayerFallState : PlayerState
 {
-    public PlayerIdleState(PlayerStateMachine stateMachine, Player playerRef) : base(stateMachine, playerRef)
+    public PlayerFallState(PlayerStateMachine stateMachine, Player playerRef) : base(stateMachine, playerRef)
     {
-
     }
 
     public override void LogicUpdate()
@@ -17,8 +16,6 @@ public class PlayerIdleState : PlayerState
     public override void OnStateEnter()
     {
         base.OnStateEnter();
-
-        PlayerRef.Rb2d.velocity = Vector2.zero;
     }
 
     public override void OnStateExit()

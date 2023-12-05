@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class PlayerIdleState : PlayerState
+public class PlayerRunState : PlayerState
 {
-    public PlayerIdleState(PlayerStateMachine stateMachine, Player playerRef) : base(stateMachine, playerRef)
+    public PlayerRunState(PlayerStateMachine stateMachine, Player playerRef) : base(stateMachine, playerRef)
     {
 
     }
@@ -17,17 +18,19 @@ public class PlayerIdleState : PlayerState
     public override void OnStateEnter()
     {
         base.OnStateEnter();
-
-        PlayerRef.Rb2d.velocity = Vector2.zero;
     }
 
     public override void OnStateExit()
     {
         base.OnStateExit();
+
+        
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+        
+        PlayerRef.Rb2d.velocity = new Vector2(PlayerRef.Direction * PlayerRef.GroundSpeed, PlayerRef.Rb2d.velocity.y);
     }
 }
