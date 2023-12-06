@@ -10,12 +10,14 @@ public class DebugSpriteFunctions : MonoBehaviour
     {
         RewindController.OnEnterRewind += RewindSprite;
         RewindController.OnExitRewind += RegularSprite;
+        PlayerController.onDeath += DeathSprite;
     }
 
     private void OnDisable()
     {
         RewindController.OnEnterRewind -= RewindSprite;
         RewindController.OnExitRewind -= RegularSprite;
+        PlayerController.onDeath -= DeathSprite;
     }
 
     private void Start()
@@ -31,6 +33,11 @@ public class DebugSpriteFunctions : MonoBehaviour
     private void RegularSprite()
     {
         _spriteRenderer.color = Color.white;
+    }
+
+    private void DeathSprite()
+    {
+        _spriteRenderer.color = Color.red;
     }
 
 

@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
     private bool _canMove = true;
     private bool _isRewinding = false;
 
+    public delegate void Restart();
+    public static event Restart onDeath;
+
     private void OnEnable()
     {
         RewindController.OnEnterRewind += StopMovement;
@@ -62,7 +65,7 @@ public class PlayerController : MonoBehaviour
     {
         _isRewinding = false;
         _rewindHandler.StartRecording();
-        _rigidBody.gravityScale = 5;
+        _rigidBody.gravityScale = 10;
         _canMove = true;
     }
 
@@ -78,6 +81,14 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.BoxCast(_boxCollider.bounds.center, _boxCollider.bounds.size, 0f, Vector2.down, .3f, _groundLayer);
         return hit.collider != null;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Killzone"))
+        {
+            onDeath();
+        }
     }
 
     private void Move()
