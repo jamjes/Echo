@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
     {
         _isRewinding = false;
         _rewindHandler.StartRecording();
-        _rigidBody.gravityScale = 1;
+        _rigidBody.gravityScale = 5;
         _canMove = true;
     }
 

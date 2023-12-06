@@ -33,7 +33,6 @@ public class RewindHandler : MonoBehaviour
         switch(CurrentState)
         {
             case RewindState.Record:
-                Debug.Log("Recording!!");
                 _timerRef += Time.deltaTime;
                 if (_timerRef >= _frameRateAsDelta)
                 {
@@ -50,7 +49,6 @@ public class RewindHandler : MonoBehaviour
                 break;
 
             case RewindState.Retrieve:
-                Debug.Log("Rewinding!!");
                 if (_timerRef == _frameRateAsDelta)
                 {
                     if (_rewindablePoints.Count > 0)
@@ -61,12 +59,6 @@ public class RewindHandler : MonoBehaviour
                 }
 
                 _timerRef -= Time.deltaTime;
-
-                if (_rewindablePoints.Count == 0)
-                {
-                    Debug.Log("Empty!");
-                    StartRecording();
-                }
 
                 if (_timerRef <= 0)
                 {
