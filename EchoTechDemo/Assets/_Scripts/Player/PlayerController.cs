@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private int _speed = 6;
-    [SerializeField] private int _jumpForce = 12;
+    [SerializeField] private float _speed = 10;
+    [SerializeField] private float _jumpForce = 20.5f;
     [SerializeField] private LayerMask _groundLayer;
 
     public float Direction {private set; get;}

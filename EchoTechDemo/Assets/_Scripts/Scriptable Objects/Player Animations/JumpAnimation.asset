@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f556a0279ca202a4992c328e7b6f2309, type: 3}
+  m_Name: JumpAnimation
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 9
+  AnimationFrames:
+  - {fileID: 21300000, guid: 8a13a194e386ee841aaf6cadf1a34125, type: 3}
+  - {fileID: 21300000, guid: ad5ed6e13ae538f49a594890dc1a463c, type: 3}
+  - {fileID: 21300000, guid: f6a3e500bfea45d4485fff42aeb5c83a, type: 3}
+  - {fileID: 21300000, guid: b94052477458e6749a9706c9ad466c18, type: 3}
+  ReverseAnimationFrames:
+  - {fileID: 21300000, guid: d8b0a818e6f01f04280c4cc10421428f, type: 3}
+  - {fileID: 21300000, guid: b582d28f3de41164ea586f731262af2e, type: 3}
+  - {fileID: 21300000, guid: 6bd2c5a572dee4f439febabadfb876af, type: 3}
+  - {fileID: 21300000, guid: 5daa5b3efe5912c49a42c05fe755ede9, type: 3}
+  Loop: 1

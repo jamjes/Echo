@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f556a0279ca202a4992c328e7b6f2309, type: 3}
+  m_Name: FallAnimation
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 9
+  AnimationFrames:
+  - {fileID: 21300000, guid: c98d942893880ab4fb59b5111675bc58, type: 3}
+  - {fileID: 21300000, guid: ae4a42612b79bcb43b53e6643528abb1, type: 3}
+  - {fileID: 21300000, guid: d72763d76b7111540a2ef8ff81b0c564, type: 3}
+  - {fileID: 21300000, guid: 37adf08dc8e39784d861759c8eb71fcb, type: 3}
+  ReverseAnimationFrames:
+  - {fileID: 21300000, guid: 4248dc2ec2cc410448842b4883d1c7f4, type: 3}
+  - {fileID: 21300000, guid: 13b5017eb6700384c9b030716c0adbb5, type: 3}
+  - {fileID: 21300000, guid: a9d34069e97280141b650d49f1778364, type: 3}
+  - {fileID: 21300000, guid: 79865300784290647864dfc6858ab615, type: 3}
+  Loop: 1

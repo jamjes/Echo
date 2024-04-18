@@ -3012,7 +3012,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 10
-  _jumpForce: 23
+  _jumpForce: 20
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -3088,6 +3088,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   player: {fileID: 253492555}
+  _slideSpeed: 3
   rb: {fileID: 253492551}
 --- !u!1 &323615557
 GameObject:

@@ -9,6 +9,7 @@ public class WallSlide : MonoBehaviour
     public LayerMask _wallLayer;
     public PlayerController player;
     private Vector2 _detectDirection;
+    [SerializeField] private float _slideSpeed = 3f;
     public Rigidbody2D rb;
     
     private void Update()
@@ -24,7 +25,7 @@ public class WallSlide : MonoBehaviour
 
         if (Walled && (player.Direction != 0 && rb.velocity.y < 0))
         {
-            rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -1, 0));
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -(_slideSpeed), 0));
         }
     }
 

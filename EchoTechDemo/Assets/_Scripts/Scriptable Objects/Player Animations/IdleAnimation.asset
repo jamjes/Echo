@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f556a0279ca202a4992c328e7b6f2309, type: 3}
+  m_Name: IdleAnimation
+  m_EditorClassIdentifier: 
+  AnimationSpeed: 9
+  AnimationFrames:
+  - {fileID: 21300000, guid: 4f4d5b4ed33d2524294272bedce722cd, type: 3}
+  - {fileID: 21300000, guid: 11757aa12b69d47479f5620f87ec31cc, type: 3}
+  - {fileID: 21300000, guid: d81697b07715cf94f9232d38113547a1, type: 3}
+  ReverseAnimationFrames:
+  - {fileID: 21300000, guid: 9e5559ad60e17904fa31d2634e714ba5, type: 3}
+  - {fileID: 21300000, guid: b2e2a44c4302be741b5d50bc5c67215c, type: 3}
+  - {fileID: 21300000, guid: 678f3268a87f8cf449fab08737cafa5e, type: 3}
+  Loop: 1
