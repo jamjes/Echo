@@ -11,6 +11,8 @@ public class PlayerAnimationController : MonoBehaviour
     float timeReference;
     bool reverse;
 
+    bool isFading;
+
     [SerializeField] CustomAnimation _idleAnimation;
     [SerializeField] CustomAnimation _runAnimation;
     [SerializeField] CustomAnimation _jumpAnimation;
@@ -29,7 +31,7 @@ public class PlayerAnimationController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            reverse = !reverse;
+            StartCoroutine(Transform());
         }
         
         if (Input.GetKeyDown(KeyCode.LeftArrow)
@@ -96,4 +98,14 @@ public class PlayerAnimationController : MonoBehaviour
         _speed = 1f / (float)_currentAnimation.AnimationSpeed;
     }
 
+    IEnumerator Transform()
+    {
+        CustomAnimation originalState = _currentAnimation;
+        isFading = true;
+        SetState(_transformAnimation);
+        yield return new WaitForSeconds(3f);
+        reverse = !reverse;
+        isFading = false;
+        SetState(originalState);
+    }
 }
