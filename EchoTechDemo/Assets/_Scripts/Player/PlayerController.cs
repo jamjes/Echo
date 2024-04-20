@@ -8,10 +8,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _jumpForce = 20.5f;
     [SerializeField] private LayerMask _groundLayer;
 
+    public PlayerStateMachine StateMachine;
+
     public float Direction {private set; get;}
     public bool Grounded { private set; get; }
 
-    private Rigidbody2D _rigidBody;
+    public Rigidbody2D RigidBody { private set; get; }
     private BoxCollider2D _boxCollider;
     private RewindHandler _rewindHandler;
 
@@ -36,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        _rigidBody = GetComponent<Rigidbody2D>();
+        RigidBody = GetComponent<Rigidbody2D>();
         _boxCollider = GetComponent<BoxCollider2D>();
         _rewindHandler = GetComponent<RewindHandler>();
     }
@@ -46,18 +48,53 @@ public class PlayerController : MonoBehaviour
         Grounded = IsGrounded();
         Direction = Input.GetAxisRaw("Horizontal");
 
+        if (Grounded)
+        {
+            if (Direction != 0)
+            {
+                StateMachine.SetState(PlayerStateMachine.State.Run);
+            }
+            else
+            {
+                StateMachine.SetState(PlayerStateMachine.State.Idle);
+            }
+        }
+        else
+        {
+            if (RigidBody.velocity.y > 0)
+            {
+                StateMachine.SetState(PlayerStateMachine.State.Jump);
+            }
+            else
+            {
+                StateMachine.SetState(PlayerStateMachine.State.Fall);
+            }
+        }
+
         if (Input.GetButtonDown("Jump") && Grounded)
         {
             if (_canMove) Jump();
         }
+
+        if (Input.GetButtonDown("Rewind"))
+        {
+            if (_canMove) StartCoroutine(PauseMovement()); StateMachine.SetState(PlayerStateMachine.State.Transform);
+        }
+    }
+
+    IEnumerator PauseMovement()
+    {
+        _canMove = false;
+        yield return new WaitForSeconds(3f);
+        _canMove = true;
     }
 
     private void StopMovement()
     {
         _isRewinding = true;
         _rewindHandler.StopRecording();
-        _rigidBody.gravityScale = 0;
-        _rigidBody.velocity = Vector2.zero;
+        RigidBody.gravityScale = 0;
+        RigidBody.velocity = Vector2.zero;
         _canMove = false;
     }
 
@@ -65,7 +102,7 @@ public class PlayerController : MonoBehaviour
     {
         _isRewinding = false;
         _rewindHandler.StartRecording();
-        _rigidBody.gravityScale = 1;
+        RigidBody.gravityScale = 1;
         _canMove = true;
     }
 
@@ -93,12 +130,12 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        _rigidBody.velocity = new Vector2(_speed * Direction, _rigidBody.velocity.y);
+        RigidBody.velocity = new Vector2(_speed * Direction, RigidBody.velocity.y);
     }
 
     private void Jump()
     {
-        _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _jumpForce);
+        RigidBody.velocity = new Vector2(RigidBody.velocity.x, _jumpForce);
     }
 
     public void SetCanMove(bool value)
