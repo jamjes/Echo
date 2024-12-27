@@ -2,19 +2,33 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour {
+
+    [Header("Dependencies")]
     private PlayerControls inputActions;
-    private Vector2 direction;
     private Rigidbody2D rb2d;
+    private Collider2D coll;
+    private RewindHandler rewindHandler;
+    public GameObject GFX;
+    private SpriteRenderer sprRenderer;
+    
+    [Header("Physics")]
+    private Vector2 direction;
     private float speed = 9;
     private float jumpForce = 13.5f;
+
+    [Header("Collision")]
     private bool facingRight = true;
-    private Collider2D coll;
     [SerializeField] private LayerMask groundLayer;
+
+    [Header("States")]
+    private bool isRewinding = false;
 
     private void Awake() {
         inputActions = new PlayerControls();
         rb2d = GetComponent<Rigidbody2D>();
         coll = GetComponent<BoxCollider2D>();
+        rewindHandler = GetComponent<RewindHandler>();
+        sprRenderer = GFX.GetComponent<SpriteRenderer>();
     }
 
     private void OnEnable() {
@@ -28,35 +42,48 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void Update() {
-        float inputX = inputActions.Default.Move.ReadValue<Vector2>().x;
-        float inputY = inputActions.Default.Move.ReadValue<Vector2>().y;
-        bool grounded = IsGrounded();
+        isRewinding = Input.GetKey(KeyCode.K);
 
-        if (inputX > 0 && inputX != 1) {
-            inputX = 1;
+        if (!isRewinding) {
+            rb2d.gravityScale = 1;
+            Vector2 inputDirection = inputActions.Default.Move.ReadValue<Vector2>();
+            bool grounded = IsGrounded();
+            ListenForInputs(grounded, inputDirection);
         }
-        else if (inputX < 0 && inputX != -1) {
-            inputX = -1;
+        else {
+            rb2d.gravityScale = 0;
         }
-        
-        direction = new Vector2(inputX, inputY);
+    }
 
-        if (direction.x > 0 && facingRight == false) {
+    private void ListenForInputs(bool grounded, Vector2 direction) {
+        if (direction.x > 0 && direction.x != 1) {
+            direction = new Vector2(1, direction.y);
+        }
+        else if (direction.x < 0 && direction.x != -1) {
+            direction = new Vector2(-1, direction.y);
+        }
+
+        this.direction = direction;
+
+        if (this.direction.x > 0 && facingRight == false) {
             transform.rotation = Quaternion.Euler(0, 0, 0);
             facingRight = true;
         }
-        
-        if (direction.x < 0 && facingRight == true) {
+
+        if (this.direction.x < 0 && facingRight == true) {
             transform.rotation = Quaternion.Euler(0, -180, 0);
             facingRight = false;
         }
-
         if (inputActions.Default.Jump.triggered && grounded) {
             Jump();
         }
     }
 
     private void FixedUpdate() {
+        if (isRewinding == true) {
+            return;
+        }
+
         rb2d.linearVelocityX = direction.x * speed;
     }
 
