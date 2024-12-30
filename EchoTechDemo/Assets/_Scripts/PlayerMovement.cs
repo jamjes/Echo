@@ -10,6 +10,13 @@ public class PlayerMovement : MonoBehaviour {
     private RewindHandler rewindHandler;
     public GameObject GFX;
     private SpriteRenderer sprRenderer;
+    [SerializeField] private Animator animator;
+
+    private static readonly int
+        IdleAnimation = Animator.StringToHash("player-idle"),
+        RunAnimation = Animator.StringToHash("player-run"),
+        JumpAnimation = Animator.StringToHash("player-jump"),
+        FallAnimation = Animator.StringToHash("player-fall");
     
     [Header("Physics")]
     private Vector2 direction;
@@ -49,6 +56,22 @@ public class PlayerMovement : MonoBehaviour {
             Vector2 inputDirection = inputActions.Default.Move.ReadValue<Vector2>();
             bool grounded = IsGrounded();
             ListenForInputs(grounded, inputDirection);
+
+            if (grounded) {
+                if (inputDirection.x != 0) {
+                    animator.CrossFade(RunAnimation, 0, 0);
+                }
+                else if (inputDirection.x == 0) {
+                    animator.CrossFade(IdleAnimation, 0, 0);
+                }
+            } else if (!grounded) {
+                if (rb2d.linearVelocity.y > 0) {
+                    animator.CrossFade(JumpAnimation, 0, 0);
+                }
+                else if (rb2d.linearVelocity.y < 0) {
+                    animator.CrossFade(FallAnimation, 0, 0);
+                }
+            }
         }
         else {
             rb2d.gravityScale = 0;
