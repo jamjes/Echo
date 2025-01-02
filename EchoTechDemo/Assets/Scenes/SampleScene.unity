@@ -129,7 +129,6 @@ GameObject:
   m_Component:
   - component: {fileID: 253917586}
   - component: {fileID: 253917587}
-  - component: {fileID: 253917588}
   - component: {fileID: 253917589}
   m_Layer: 0
   m_Name: KavithaGFX
@@ -197,7 +196,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0a0b15773840c4242865bf3e0d69362f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3bf958afb90c90845ab44677444ebd60, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -208,19 +207,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &253917588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 253917585}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a257546458b80bc4d8e2995310495cd4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  runAnimation: {fileID: 11400000, guid: 2a8f97ad883b7eb4db82488259a4b410, type: 2}
 --- !u!95 &253917589
 Animator:
   serializedVersion: 7
@@ -3417,10 +3403,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1540849600}
-  - component: {fileID: 1540849603}
-  - component: {fileID: 1540849606}
   - component: {fileID: 1540849604}
   - component: {fileID: 1540849605}
+  - component: {fileID: 1540849603}
+  - component: {fileID: 1540849606}
   m_Layer: 0
   m_Name: Kavitha
   m_TagString: Player
@@ -3456,7 +3442,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccfe5979c40fd5542949634e13ff7602, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GFX: {fileID: 253917585}
   animator: {fileID: 253917589}
   groundLayer:
     serializedVersion: 2
@@ -3547,6 +3532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Points: []
+  spriteRenderer: {fileID: 253917587}
   isRewinding: 0
   index: 0
 --- !u!1 &1555335885
